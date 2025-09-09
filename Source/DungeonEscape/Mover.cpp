@@ -19,7 +19,8 @@ void UMover::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+/*
+ 	// ...
 	float MyFloat = 10.0f;
 	float *FloatPtr = &MyFloat;
 
@@ -42,8 +43,14 @@ void UMover::BeginPlay()
 	
 	UE_LOG(LogTemp, Display, TEXT("MyVector: %s"), *MyVector.ToCompactString()); // NOTE: * here for FString!!!
 	UE_LOG(LogTemp, Display, TEXT("VectorPtr: %s"), *VectorPtr->ToCompactString()); // NOTE: * here for FString!!!
-		
-	
+*/
+
+
+	UE_LOG(LogTemp, Display, TEXT("My owner is called %s"), *GetOwner()->GetActorNameOrLabel());
+
+	StartLocation = GetOwner()->GetActorLocation();
+	UE_LOG(LogTemp, Display, TEXT("%s is at location %s"),
+		*GetOwner()->GetActorNameOrLabel(), *StartLocation.ToCompactString());
 	
 }
 
@@ -55,5 +62,9 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 	// ...
 	// UE_LOG(LogTemp, Display, TEXT("Mover is ticking..."));
+
+	FVector CurrentLocation = GetOwner()->GetActorLocation();
+	CurrentLocation.Z = CurrentLocation.Z + 100.0f * DeltaTime;
+	GetOwner()->SetActorLocation(CurrentLocation);
 }
 
