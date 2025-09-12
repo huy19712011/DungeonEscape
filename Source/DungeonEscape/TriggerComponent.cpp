@@ -25,7 +25,7 @@ void UTriggerComponent::BeginPlay()
 		if (Mover)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Successfully found the mover component"));
-			Mover->ShouldMove = true;
+			// Mover->ShouldMove = true;
 		}
 		else
 		{
@@ -36,6 +36,12 @@ void UTriggerComponent::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("MoverActor is nullptr!!!"));
 	}
+
+	if (IsPressurePlate)
+	{
+		OnComponentBeginOverlap.AddDynamic(this, &UTriggerComponent::OnOverlapBegin);
+		OnComponentEndOverlap.AddDynamic(this, &UTriggerComponent::OnOverlapEnd);
+	}
 }
 
 void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
@@ -44,4 +50,25 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// UE_LOG(LogTemp, Display, TEXT("Trigger component is ticking"));
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AActor* OtherActor,
+                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                       const FHitResult& SweepResult)
+{
+	if (Mover)
+	{
+		Mover->ShouldMove = true;
+	}
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverLappedComp, AActor* OtherActor,
+                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (Mover)
+	{
+		Mover->ShouldMove = false;
+	}
 }

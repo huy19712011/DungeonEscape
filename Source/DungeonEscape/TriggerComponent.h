@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -14,7 +13,7 @@ class DUNGEONESCAPE_API UTriggerComponent : public UBoxComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UTriggerComponent();
 
@@ -22,12 +21,33 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+	                           FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditAnywhere)
-	AActor *MoverActor;
+	bool IsPressurePlate = false;
+	
+	UPROPERTY(EditAnywhere)
+	AActor* MoverActor;
 
-	UMover *Mover;
+	UMover* Mover;
+
+	UFUNCTION()
+	void OnOverlapBegin(
+		UPrimitiveComponent* OverLappedComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEnd(
+		UPrimitiveComponent* OverLappedComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex);
+	
 };
