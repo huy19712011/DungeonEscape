@@ -14,14 +14,32 @@ void UTriggerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Display, TEXT("Trigger component is alive"));
+	// UE_LOG(LogTemp, Display, TEXT("Trigger component is alive"));
+
+	if (MoverActor != nullptr)
+	{
+		Mover = MoverActor->FindComponentByClass<UMover>();
+
+		if (Mover != nullptr)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Successfully found the mover component"));
+			Mover->ShouldMove = true;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Failed to find mover component"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("MoverActor is nullptr!!!"));
+	}
 }
 
 void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-	FActorComponentTickFunction* ThisTickFunction)
+                                      FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	UE_LOG(LogTemp, Display, TEXT("Trigger component is ticking"));
-	
+	// UE_LOG(LogTemp, Display, TEXT("Trigger component is ticking"));
 }
