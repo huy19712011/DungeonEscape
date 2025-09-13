@@ -52,6 +52,20 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	// UE_LOG(LogTemp, Display, TEXT("Trigger component is ticking"));
 }
 
+void UTriggerComponent::Trigger(bool NewTriggerValue)
+{
+	IsTriggered = NewTriggerValue;
+
+	if (Mover)
+	{
+		Mover->ShouldMove = IsTriggered;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s doesn't have a mover to trigger!"), *GetOwner()->GetActorNameOrLabel());
+	}
+}
+
 // ReSharper disable once CppMemberFunctionMayBeConst
 void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AActor* OtherActor,
                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -59,9 +73,9 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AAct
 {
 	if (OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
-		if (Mover)
+		if (!IsTriggered)
 		{
-			Mover->ShouldMove = true;
+			Trigger(true);
 		}
 	}
 }
@@ -72,9 +86,9 @@ void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverLappedComp, AActor
 {
 	if (OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
-		if (Mover)
+		if (IsTriggered)
 		{
-			Mover->ShouldMove = false;
+			Trigger(false);
 		}
 	}
 }
