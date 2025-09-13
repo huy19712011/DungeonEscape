@@ -57,7 +57,7 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AAct
                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                        const FHitResult& SweepResult)
 {
-	if (OtherActor->ActorHasTag("PressurePlateActivator"))
+	if (OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
 		if (Mover)
 		{
@@ -70,7 +70,7 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AAct
 void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverLappedComp, AActor* OtherActor,
                                      UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor->ActorHasTag("PressurePlateActivator"))
+	if (OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
 		if (Mover)
 		{
