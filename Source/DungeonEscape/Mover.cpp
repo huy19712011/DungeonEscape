@@ -54,6 +54,8 @@ void UMover::BeginPlay()
 	// 	*GetOwner()->GetActorNameOrLabel(), *StartLocation.ToCompactString());
 
 	// TargetLocation = StartLocation + MoveOffset;
+
+	SetShouldMove(false);
 }
 
 
@@ -65,14 +67,7 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 	// ...
 	// UE_LOG(LogTemp, Display, TEXT("Mover is ticking..."));
 
-	if (ShouldMove)
-	{
-		TargetLocation = StartLocation + MoveOffset;
-	}
-	else
-	{
-		TargetLocation = StartLocation;
-	}
+
 
 	FVector CurrentLocation = GetOwner()->GetActorLocation();
 
@@ -89,4 +84,25 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 		// UE_LOG(LogTemp, Display, TEXT("Mover is moving..."));
 	}
 
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+bool UMover::GetShouldMove()
+{
+	return ShouldMove;
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+void UMover::SetShouldMove(bool NewShouldMove)
+{
+	ShouldMove = NewShouldMove;
+
+	if (ShouldMove)
+	{
+		TargetLocation = StartLocation + MoveOffset;
+	}
+	else
+	{
+		TargetLocation = StartLocation;
+	}
 }
