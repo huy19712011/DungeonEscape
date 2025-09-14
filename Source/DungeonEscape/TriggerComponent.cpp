@@ -45,7 +45,7 @@ void UTriggerComponent::BeginPlay()
 }
 
 void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                      FActorComponentTickFunction* ThisTickFunction)
+	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -67,12 +67,15 @@ void UTriggerComponent::Trigger(bool NewTriggerValue)
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AActor* OtherActor,
                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                        const FHitResult& SweepResult)
 {
 	if (OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
+		ActivatorCount++;
+
 		if (!IsTriggered)
 		{
 			Trigger(true);
@@ -81,12 +84,15 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverLappedComp, AAct
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverLappedComp, AActor* OtherActor,
                                      UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	if (OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
-		if (IsTriggered)
+		ActivatorCount--;
+
+		if (IsTriggered && (ActivatorCount == 0))
 		{
 			Trigger(false);
 		}

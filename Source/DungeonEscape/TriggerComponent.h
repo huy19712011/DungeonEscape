@@ -37,6 +37,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	bool IsTriggered = false;
 
+	UPROPERTY(VisibleAnywhere)
+	int32 ActivatorCount = 0;
+
 	UMover* Mover;
 
 	UFUNCTION()
