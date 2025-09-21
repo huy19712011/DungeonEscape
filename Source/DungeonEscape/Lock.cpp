@@ -26,6 +26,9 @@ ALock::ALock()
 void ALock::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SetIsKeyPlaced(true);
+	// SetIsKeyPlaced(false);
 	
 }
 
@@ -35,4 +38,20 @@ void ALock::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+void ALock::SetIsKeyPlaced(bool NewIsKeyPlaced)
+{
+	IsKeyPlaced = NewIsKeyPlaced;
+
+	TriggerComp->Trigger(NewIsKeyPlaced);
+	KeyItemMesh->SetVisibility(NewIsKeyPlaced);
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+bool ALock::GetIsKeyPlaced()
+{
+	return IsKeyPlaced;
+}
+
 
