@@ -70,6 +70,13 @@ void ADungeonEscapeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 	}
 }
 
+void TestFunction(FVector &Vector)
+{
+	Vector.X = 100.0f;
+	Vector.Y = 200.0f;
+	Vector.Z = 300.0f;
+}
+
 // ReSharper disable once CppMemberFunctionMayBeConst
 void ADungeonEscapeCharacter::Interact()
 {
@@ -94,6 +101,13 @@ void ADungeonEscapeCharacter::Interact()
 	VecRef.Z = 30.0f;
 	UE_LOG(LogTemp, Display, TEXT("MyVec: %s"), *MyVec.ToCompactString());
 	UE_LOG(LogTemp, Display, TEXT("VecRef: %s"), *VecRef.ToCompactString());
+
+	// 
+	FVector TestVector = FVector(1.0f, 2.0f, 3.0f);
+	UE_LOG(LogTemp, Display, TEXT("TestVector: %s"), *TestVector.ToCompactString());
+	TestFunction(TestVector);
+	UE_LOG(LogTemp, Display, TEXT("TestVector: %s"), *TestVector.ToCompactString());
+	
 	
 	
 	// GetWorld()->SweepSingleByChannel();
