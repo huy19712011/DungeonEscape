@@ -73,7 +73,12 @@ void ADungeonEscapeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 // ReSharper disable once CppMemberFunctionMayBeConst
 void ADungeonEscapeCharacter::Interact()
 {
-	UE_LOG(LogTemp, Warning, TEXT("INTERACT"));
+	// UE_LOG(LogTemp, Warning, TEXT("INTERACT"));
+
+	FVector Start = FirstPersonCameraComponent->GetComponentLocation();
+	FVector End = Start + (FirstPersonCameraComponent->GetForwardVector() * MaxInteractionDistance);
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 30.0f);
+	
 	
 	// GetWorld()->SweepSingleByChannel();
 }
