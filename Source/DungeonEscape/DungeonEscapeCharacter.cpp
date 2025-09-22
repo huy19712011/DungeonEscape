@@ -128,12 +128,22 @@ void ADungeonEscapeCharacter::Interact()
 		FQuat::Identity,
 		ECC_GameTraceChannel2,
 		InteractionSphere
-		);
+	);
 
 	if (HasHit)
 	{
 		AActor* HitActor = HitResult.GetActor();
-		UE_LOG(LogTemp, Display, TEXT("Shape trace hit actor %s"), *HitActor->GetActorNameOrLabel());
+		// UE_LOG(LogTemp, Display, TEXT("Shape trace hit actor %s"), *HitActor->GetActorNameOrLabel());
+		if (HitActor->ActorHasTag("CollectableItem"))
+		{
+			// HitActor is a collectable item
+			UE_LOG(LogTemp, Display, TEXT("Collectable Item"));
+		}
+		else if (HitActor->ActorHasTag("Lock"))
+		{
+			// HitActor is a lock item
+			UE_LOG(LogTemp, Display, TEXT("Lock Actor"));
+		}
 	}
 	else
 	{
