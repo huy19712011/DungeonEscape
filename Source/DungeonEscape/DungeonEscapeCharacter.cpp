@@ -10,6 +10,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DungeonEscape.h"
 
+#include "CollectableItem.h"
+#include "Lock.h"
+
 ADungeonEscapeCharacter::ADungeonEscapeCharacter()
 {
 	// Set size for collision capsule
@@ -137,12 +140,22 @@ void ADungeonEscapeCharacter::Interact()
 		if (HitActor->ActorHasTag("CollectableItem"))
 		{
 			// HitActor is a collectable item
-			UE_LOG(LogTemp, Display, TEXT("Collectable Item"));
+			// UE_LOG(LogTemp, Display, TEXT("Collectable Item"));
+
+			if (ACollectableItem* CollectableItem = Cast<ACollectableItem>(HitActor))
+			{
+				UE_LOG(LogTemp, Display, TEXT("Collectable Item with name %s"), *CollectableItem->ItemName);
+			}
 		}
 		else if (HitActor->ActorHasTag("Lock"))
 		{
 			// HitActor is a lock item
-			UE_LOG(LogTemp, Display, TEXT("Lock Actor"));
+			// UE_LOG(LogTemp, Display, TEXT("Lock Actor"));
+
+			if (ALock* LockActor = Cast<ALock>(HitActor))
+			{
+				UE_LOG(LogTemp, Display, TEXT("Lock Actor with key item name %s"), *LockActor->KeyItemName);
+			}
 		}
 	}
 	else
