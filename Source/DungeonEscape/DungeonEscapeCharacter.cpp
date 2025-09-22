@@ -83,6 +83,19 @@ void ADungeonEscapeCharacter::Interact()
 	DrawDebugSphere(GetWorld(), Start, InteractionSphereRadius, 20, FColor::Green, false, 30.0f);
 	DrawDebugSphere(GetWorld(), End, InteractionSphereRadius, 20, FColor::Blue, false, 30.0f);
 
+	// for example
+	FVector MyVec = FVector(1.0f, 2.0f, 3.0f);
+	FVector &VecRef = MyVec;
+	UE_LOG(LogTemp, Display, TEXT("MyVec: %s"), *MyVec.ToCompactString());
+	UE_LOG(LogTemp, Display, TEXT("VecRef: %s"), *VecRef.ToCompactString());
+
+	VecRef.X = 10.0f;
+	VecRef.Y = 20.0f;
+	VecRef.Z = 30.0f;
+	UE_LOG(LogTemp, Display, TEXT("MyVec: %s"), *MyVec.ToCompactString());
+	UE_LOG(LogTemp, Display, TEXT("VecRef: %s"), *VecRef.ToCompactString());
+	
+	
 	// GetWorld()->SweepSingleByChannel();
 }
 
