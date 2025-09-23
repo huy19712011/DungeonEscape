@@ -157,7 +157,24 @@ void ADungeonEscapeCharacter::Interact()
 
 			if (ALock* LockActor = Cast<ALock>(HitActor))
 			{
-				UE_LOG(LogTemp, Display, TEXT("Lock Actor with key item name %s"), *LockActor->KeyItemName);
+				// UE_LOG(LogTemp, Display, TEXT("Lock Actor with key item name %s"), *LockActor->KeyItemName);
+				//1. Is the lock empty?
+				if (!LockActor->GetIsKeyPlaced())
+				{
+					// Lock is empty
+					int32 ItemsRemoved = ItemList.RemoveSingle(LockActor->KeyItemName);
+					if (ItemsRemoved)
+					{
+						LockActor->SetIsKeyPlaced(true);
+					}
+					else
+					{
+						UE_LOG(LogTemp, Display, TEXT("Key item not in inventory"));
+					}
+				}
+				//2. Do we have the KeyItemName in our ItemList?
+				//3. Remove the item from our inventory if we have it
+				//4. Activate the lock
 			}
 		}
 	}
